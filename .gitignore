@@ -1,0 +1,12 @@
+# Neovim cache
+.cache/
+.undo/
+.swap/
+.backup/
+
+# Lazy / Packer junk
+lazy/
+packer_compiled.lua
+
+# OS
+.DS_Store

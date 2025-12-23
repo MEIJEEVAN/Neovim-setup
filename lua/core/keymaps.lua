@@ -84,7 +84,7 @@ vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist, { desc = "Open diagn
 local map = vim.keymap.set
 
 -- General compile & run shortcut
-map("n", "<C-A-x>", function()
+map("n", "<A-x>", function()
 	local filetype = vim.bo.filetype
 	local filename = vim.fn.expand("%")
 	local command = ""
@@ -105,7 +105,7 @@ map("n", "<C-A-x>", function()
 		command = "node " .. filename
 	elseif filetype == "html" then
 		command = "live-server " .. vim.fn.expand("%:p:h")
-	elseif filetype == "assembly" then
+	elseif filetype == "asm" or filetype == "nasm" then
 		command = "nasm -f elf64 "
 			.. filename
 			.. " && ld "
@@ -124,5 +124,14 @@ end, { desc = "Compile/Run current file" })
 
 --My changes
 vim.keymap.set("n", "<A-h>", function()
-	vim.cmd("botright split | resize 15 | terminal fish")
+	vim.cmd("botright split | resize 15 | terminal fish") --terminal in horizontal split
 end, { noremap = true, silent = true, desc = "Open fish terminal bottom split" })
+
+vim.keymap.set({ "i", "s" }, "<A-k>", function()
+	local ls = require("luasnip") --snippet accepting key
+	if ls.expand_or_jumpable() then
+		ls.expand_or_jump()
+	end
+end, { silent = true })
+
+vim.keymap.set("n", "<A-c>", ":bdelete!<CR>", opts) -- close output split buffer

@@ -105,6 +105,8 @@ map("n", "<A-x>", function()
 		command = "node " .. filename
 	elseif filetype == "html" then
 		command = "live-server " .. vim.fn.expand("%:p:h")
+	elseif filetype == "lua" then
+		command = "lua " .. filename
 	elseif filetype == "asm" or filetype == "nasm" then
 		command = "nasm -f elf64 "
 			.. filename

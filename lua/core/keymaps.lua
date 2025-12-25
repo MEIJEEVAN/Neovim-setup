@@ -129,10 +129,19 @@ vim.keymap.set("n", "<A-h>", function()
 	vim.cmd("botright split | resize 15 | terminal fish") --terminal in horizontal split
 end, { noremap = true, silent = true, desc = "Open fish terminal bottom split" })
 
-vim.keymap.set({ "i", "s" }, "<A-k>", function()
-	local ls = require("luasnip") --snippet accepting key
+vim.keymap.set({ "i", "s" }, "<Tab>", function()
+	local ls = require("luasnip")
 	if ls.expand_or_jumpable() then
 		ls.expand_or_jump()
+	else
+		vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<Tab>", true, false, true), "n", true)
+	end
+end, { silent = true })
+
+vim.keymap.set({ "i", "s" }, "<S-Tab>", function()
+	local ls = require("luasnip")
+	if ls.jumpable(-1) then
+		ls.jump(-1)
 	end
 end, { silent = true })
 
